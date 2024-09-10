@@ -44,14 +44,14 @@ Nun importiere die im Projekt-Hauptordner vorhandene Datenbank.
 
 ```console
 cd likeHeroToZero
-mysql -u yourUserName -p < likeHeroToZero.sql
+mysql -u deinUserName -p < likeHeroToZero.sql
 ```
 
-Falls du eine Meldung bekommst, "keine Datenbank unter diesen Namen" bedeutet das, dass dein MariaDB das direkte Erschaffen von Datenbank direkt aus dem Import nicht unterstützt.
-In diesem Fall logge dich in deinem SQL-Client ein mit dem Terminal oder einem GUI-Client:
+Falls du eine Fehlermeldung "unknown Database" bekommst, so bedeutet das, dass dein MariaDB das direkte Erschaffen von Datenbanken direkt aus dem Import nicht unterstützt.  
+In diesem Fall logge dich zuerst in deinem SQL-Client mit dem Terminal oder einem GUI-Client ein:
 
 ```console
-mysql -u yourUserName -p
+mysql -u deinUserName -p
 ```
 
 Erschaffe die Datenbank:
@@ -59,9 +59,9 @@ Erschaffe die Datenbank:
 CREATE DATABASE likeHeroToZero;
 ```
 
-Logge dich aus dem Client aus und dann gebe ein:
+Logge dich aus dem Client aus und dann führe dies aus:
 ```console
-mysql -u yourUserName -p likeHeroToZero < likeHeroToZero.sql
+mysql -u deinUserName -p likeHeroToZero < likeHeroToZero.sql
 ```
 
 Die Datenbank ist nun installiert und eingerichtet.
@@ -71,7 +71,7 @@ Die Datenbank ist nun installiert und eingerichtet.
 - Lade WildFly 33.0.1. [hier](https://www.wildfly.org/downloads/) herunter. 
 - Entpacke den heruntergeladenen Ordner und speichere den Serverordner in einem Ort deiner Wahl. 
 - Lade die .jar-Datei des MariaDB JDBC Treibers [hier](https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client/3.4.1) herunter.  
-Alternativ dazu findest du eine Kopie der .jar im Hauptordner des Projekts.  
+Alternativ dazu findest du eine Kopie dieser .jar im Hauptordner des Projekts.  
 (**WICHTIG: diese .jar NICHT zu den Libraries des Projekt selbst hinzufügen!**).
 
 - Richte einen Management-User für den Server ein (keine Group notwendig):
@@ -85,11 +85,11 @@ Alternativ dazu findest du eine Kopie der .jar im Hauptordner des Projekts.
 /pfad/zum/server/wildfly-33.0.1.Final/bin/standalone.sh
 ```
 
-- Logge dich in einem Browser deiner Wahl in der Server-Console ein: [http://localhost:9990/console](http://localhost:9990/console)
+- Logge dich in einem Browser deiner Wahl in der Server-Console ein unter *http://localhost:9990/console*
 
 In der Console:  
 - Gehe zu *Deployments*. Wähle *Add* (das kleine '+' Icon oben links). Wähle *Upload Deployment*.
-- Lade die davor geladene .jar-Datei des JDBC Treiber hoch (maridb-java-client-3.4.1.jar).
+- Lade die davor geladene .jar-Datei des JDBC Treiber hoch (*maridb-java-client-3.4.1.jar*).
 - Wähle  *Homepage > Configurations*.  
 - Wähle  *Subsystems > Datasources & Drivers > Datasources* und dann erneut *Add* (das + icon). Wähle *Add Datasource*.
 - Unter *Choose Template* wähle *MariaDB*.
@@ -97,7 +97,7 @@ In der Console:
 - Unter *Driver Name* wähle die zuvor geladene *maridb-java-client-3.4.1.jar*, lasse *Driver Class Name* unverändert (org.mariadb.jdbc.Driver).
 - Unter *Connection URL* trage am Ende der URL den Database-Namen ein. Die vollständige URL sollte sein: *jdbc:mariadb://localhost:3306/likeHeroToZero*.
 - Unter *Username* und *Password* trage die Zugangsdaten deines Database-Users ein.
-- Clicke auf "Test Connection". Bestätige anschließend alle Settings.
+- Klicke auf "Test Connection". Bestätige anschließend alle Settings.
 
 Dein Server ist nun eingerichtet!
 
@@ -106,9 +106,9 @@ Dein Server ist nun eingerichtet!
 - Öffne IntelliJ IDEA
 - Gehe auf *File > Open* und öffne den Projektordner. IntelliJ sollte automatisch das Projekt als Maven Project erkennen und die Dependencies importieren.
 - Der Server sollte ebenfalls automatisch erkannt werden. Wenn nicht, dann gehe auf *File > Settings > Build, Execution, Deployment > Application Servers*, füge einen neuen Wildfly Server ein und gebe das WildFly-Verzeichnis an.
-- Danach gehe zu *Run > Edit Configurations*. Dort das Verzeichnis des Servers checken (oder angeben, falls nicht zuvor geschehen), checken, dass der Server auf *Standalone* eingestellt ist, und unter *Before Launch* checken, ob der Artefakt *likeHeroToZero:war exploded* korrekt deployed wird.
+- Danach gehe zu *Run > Edit Configurations*. Dort das Verzeichnis des Servers checken (oder angeben, falls nicht zuvor geschehen), checken, dass der Server auf *Standalone* eingestellt ist, und unter *Before Launch* checken, dass der Artefakt *likeHeroToZero:war exploded* korrekt deployed wird.
 Das korrekte Deployment des Artefakts ebenfalls unter dem Tab *Deployments* im selben Fenster checken.
-- In *src/main/resources/META-INF/persistence.xml* ändere die Einträge *value="benutzer"* und *value="passwort"* in Zeile 11 und 12 mit den eigenen Benutzername und Password der MariaDB-Database.
+- In *src/main/resources/META-INF/persistence.xml* ändere die Einträge *value="benutzer"* und *value="passwort"* in Zeile 11 und 12 mit den eigenen Benutzername und Passwort der MariaDB-Database.
 
 Nun kannst du das Projekt mit dem "Run" Button starten! Das Projekt öffnet sich automatisch im Browser.
 
@@ -118,11 +118,11 @@ Nun kannst du das Projekt mit dem "Run" Button starten! Das Projekt öffnet sich
 - Gehe zu *File > Import > Existing Maven Projects* und clicke auf *Next*.
 - Gehe auf *Browse*, wähle das Projektordner und clicke auf *Finish*.
 - Gehe zum Eclipse Terminal und führe `mvn clean install` aus.
-- Gehe nun zu *Servers* und clicke auf dem Link, um einen neuen Server zu erstellen.
-- Wähle *JBoss Community > WildFly 27+* und clicke *Next*.
-- Akzeptiere alle Standardoptionen ("Local", "Filesystem and shell operation", "Server lifecycle is externally managed" auf unchecked, und "assign a runtime to this server" auf checked) und clicke *Next*
+- Gehe nun zu *Servers* und klicke auf dem Link, um einen neuen Server zu erstellen.
+- Wähle *JBoss Community > WildFly 27+* und klicke *Next*.
+- Lasse alle voreingestellte Optionen unverändert ("Local", "Filesystem and shell operation", "Server lifecycle is externally managed" auf unchecked, und "assign a runtime to this server" auf checked) und clicke *Next*.
 - Füge die Resource *likeHeroToZero* zum Server hinzu, indem du sie wählst und auf *Add* clickst. Clicke anschließend auf *Finish*.
-- In *src/main/resources/META-INF/persistence.xml* ändere die Einträge *value="benutzer"* und *value="passwort"* in Zeile 11 und 12 mit den eigenen Benutzername und Password der MariaDB-Database.
+- In *src/main/resources/META-INF/persistence.xml* ändere die Einträge *value="benutzer"* und *value="passwort"* in Zeile 11 und 12 mit den eigenen Benutzername und Passwort der MariaDB-Database.
 - Führe ein Recht-click auf dem Projektnamen, wähle *Run as > Run on server*, bestätige alle Optionen.
 
 Das Projekt läuft nun und kann in jedem beliebigen Browser unter *localhost:8080/likeHeroToZero-1.0.SNAPSHOT/* aufgerufen werden.
