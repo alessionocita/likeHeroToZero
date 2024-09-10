@@ -120,7 +120,7 @@ Nun kannst du das Projekt mit dem "Run" Button starten! Das Projekt öffnet sich
 - Gehe zum Eclipse Terminal und führe `mvn clean install` aus.
 - Gehe nun zu *Servers* und clicke auf dem Link, um einen neuen Server zu erstellen.
 - Wähle *JBoss Community > WildFly 27+* und clicke *Next*.
-- Akzeptiere alle Standardoptionen ("Local", "Filesystem and shell operation", "Server lifecycle is externally managed" auf unchecked, und "assign" a runtime to this server" auf checked) und clicke *Next*
+- Akzeptiere alle Standardoptionen ("Local", "Filesystem and shell operation", "Server lifecycle is externally managed" auf unchecked, und "assign a runtime to this server" auf checked) und clicke *Next*
 - Füge die Resource *likeHeroToZero* zum Server hinzu, indem du sie wählst und auf *Add* clickst. Clicke anschließend auf *Finish*.
 - In *src/main/resources/META-INF/persistence.xml* ändere die Einträge *value="benutzer"* und *value="passwort"* in Zeile 11 und 12 mit den eigenen Benutzername und Password der MariaDB-Database.
 - Führe ein Recht-click auf dem Projektnamen, wähle *Run as > Run on server*, bestätige alle Optionen.
