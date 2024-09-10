@@ -72,7 +72,7 @@ Die Datenbank ist nun installiert und eingerichtet.
 - Entpacke den heruntergeladenen Ordner und speichere den Serverordner in einem Ort deiner Wahl. 
 - Lade die .jar-Datei des MariaDB JDBC Treibers [hier](https://mvnrepository.com/artifact/org.mariadb.jdbc/mariadb-java-client/3.4.1) herunter.  
 Alternativ dazu findest du eine Kopie dieser .jar im Hauptordner des Projekts.  
-(**WICHTIG: diese .jar NICHT zu den Libraries des Projekt selbst hinzufügen!**).
+(**WICHTIG: diese .jar NICHT zu den Libraries des Projekts hinzufügen!**).
 
 - Richte einen Management-User für den Server ein (keine Group notwendig):
 
