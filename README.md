@@ -38,7 +38,7 @@ sudo apt-get install mariadb-server
 brew install mariadb
 ```
 
-Erschaffe einen neuen User und Password oder bleibe beim root-user: hauptsache, du merkst dir deine Zugangsdaten!
+Falls du noch keinen Datenbank-User hast: erschaffe einen neuen User und Password (oder bleibe beim root-user: hauptsache, du merkst dir deine Zugangsdaten!)
 
 Nun importiere die im Projekt-Hauptordner vorhandene Datenbank.
 
