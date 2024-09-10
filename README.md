@@ -87,7 +87,7 @@ Alternativ dazu findest du eine Kopie dieser .jar im Hauptordner des Projekts.
 
 - Logge dich in einem Browser deiner Wahl in der Server-Console ein unter *http://localhost:9990/console*
 
-In der Console:  
+In der Server-Console im Browser-Fenster:  
 - Gehe zu *Deployments*. Wähle *Add* (das kleine '+' Icon oben links). Wähle *Upload Deployment*.
 - Lade die davor geladene .jar-Datei des JDBC Treiber hoch (*maridb-java-client-3.4.1.jar*).
 - Wähle  *Homepage > Configurations*.  
