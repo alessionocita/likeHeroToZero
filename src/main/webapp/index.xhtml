@@ -1,0 +1,93 @@
+<!-- Homepage -->
+
+<!--Namespaces -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Stylesheet-->
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/style.css"  />
+    <!--Seiten-Titel-->
+    <title>Like Hero To Zero - Worldwide CO2 Emissions</title>
+</h:head>
+
+<h:body>
+    <header>
+        <!-- Logo mit Homepage-Link. Die graphicImage ist im Link eingebettet -->
+        <p:link outcome="index" >
+        <p:graphicImage name="images/logo.png" alt="logo" styleClass="logo"/>
+        </p:link>
+        <div>
+        <h1>Like Hero To Zero</h1>
+            <h2>Stay informed about climate change</h2>
+        </div>
+
+        <!-- Konditionale Navigation -->
+        <!-- Sign in / Sign up wenn nicht eingeloggt, Admin / Logout wenn eingeloggt -->
+        <!-- Das Logout-Link ist ein commandLink, der die Logout-Metode in UserBean aufruft -->
+        <h:form id="nav-form" styleClass="navlink-form">
+        <p:link id="nav1" value="Sign in" outcome="login" styleClass="navlink" rendered="#{userCookieBean.isLoggedIn.equals('N')}"/>
+            <p:link id="nav2" value="Admin" outcome="admin" styleClass="navlink" rendered="#{userCookieBean.isLoggedIn.equals('Y')}"/>
+        <p:link id="nav3" value="Sign up" outcome="register" styleClass="navlink" rendered="#{userCookieBean.isLoggedIn.equals('N')}"/>
+
+                <!-- Primefaces-Trigger-link für die Logout Funktion. Bei erfolgtem Logout wird eine Meldung herausgegeben -->
+                <p:commandLink id="logout-link" value="Logout" action="#{userBean.logout}"
+                               update=":nav-form" rendered="#{userCookieBean.isLoggedIn.equals('Y')}"
+                               styleClass="navlink" />
+
+                <!-- Primefaces-Komponente für die Ausgabe der Erfolgsmeldung -->
+                <p:growl id="growl" life="5000" />
+
+            </h:form>
+    </header>
+
+
+
+    <main>
+        <div class="intro-text">
+        <p>Greetings, and welcome to "Like Hero To Zero," your go-to platform for tracking global CO2 emissions. At our organization, we're dedicated to raising awareness about climate change and empowering individuals and communities to take action.</p>
+        <p>This web application provides up-to-date data on CO2 emissions from countries around the world. Whether you're a concerned citizen, a researcher, or a policymaker, our easy-to-use interface allows you to explore and compare emissions data to better understand the impact of each nation on our planet.</p>
+        </div>
+
+        <!-- Suchform für die eigene Stattbürgerschaft -->
+        <!-- die Suchfunktion wird bei jedem Tastendruck getriggert -->
+        <!-- sobald ein Land eingegeben wird, der in der Tabelle vorhanden ist, wird dieser einzeln dargestellt -->
+        <section class="country-display">
+        <h:form id="home-form" styleClass="home-form">
+
+                <h4>Search your country</h4>
+                <p:outputLabel value="Input your home country" />
+                <h:inputText id="get-country" size="20" value="#{emissionBean.country}" style="margin-top: 12px">
+                    <p:ajax event="keyup" update="country-result" />
+                </h:inputText>
+
+        </h:form>
+
+        <!-- DataTable für die Darstellung von Emission-Daten -->
+        <!-- Holt die Daten durch die allEmissions-Methode im EmissionBean und stellt sie sequentiell dar -->
+
+        <section id="country-table">
+            <h4>CO2 Emissions per Country</h4>
+        <h:dataTable id="country-result" value="#{emissionBean.allEmissions}" var="em" border="1" rowClasses="oddRow,evenRow">
+        <h:column>
+            <f:facet name="header">Country</f:facet>
+            #{em.country}
+        </h:column>
+        <h:column>
+            <f:facet name="header">CO2 Emissions (ktCO2/year)</f:facet>
+            #{em.emission}
+        </h:column>
+        </h:dataTable>
+        </section>
+
+        </section>
+
+
+
+    </main>
+
+</h:body>
+</html>

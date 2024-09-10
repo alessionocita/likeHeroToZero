@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/style.css"  />
+    <title>Like Zero To Hero - Worldwide CO2 Emissions</title>
+</h:head>
+
+<h:body>
+
+    <!-- onLoad-Event. Checkt ob der User eingeloggt ist. Falls nein, so leitet die Bean-Methode weiter auf login.xhtml -->
+    <f:event type="preRenderView" listener="#{userBean.checkIfLoggedIn}" />
+
+    <header>
+        <p:link outcome="index" >
+            <p:graphicImage name="images/logo.png" alt="logo" styleClass="logo"/>
+        </p:link>
+        <div>
+            <h1>Like Hero To Zero</h1>
+            <h2>Stay informed about climate change</h2>
+        </div>
+        <nav class="navlink-form">
+            <p:link value="Home" outcome="index" styleClass="navlink"/>
+            <p:link value="Add entry" outcome="add-emission" styleClass="navlink"/>
+        </nav>
+    </header>
+
+
+    <h:form id="emission-form">
+        <div id="table-block">
+        <h3>
+            Edit Entries
+        </h3>
+        <h4>Username:
+            <h:outputText value="#{userCookieBean.userName}" /> -
+            <p:commandLink id="logout-link" value="Logout" action="#{userBean.logout}" styleClass="navlink" />
+        </h4>
+
+        <section id="country-table">
+            <!-- Dynamisch generierte Tabelle. -->
+        <table border="1">
+            <thead>
+            <tr>
+                <th>Country</th>
+                <th>CO2 Emissions (ktCO2/year)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Das ui:repeat element holt die Emission-Daten, sie sind abrufbar unter dem Variablen-Namen "em" -->
+            <ui:repeat value="#{emissionBean.allEmissions}" var="em">
+                <tr>
+                    <td>
+                        <!-- Das ID-Feld ist ein Hidden Input. So wird die ID nicht dargestellt, jedoch bei Submit weiter gegeben -->
+                        <h:inputHidden value="#{em.id}" />
+                        <!-- Das Country-Feld ist disabled. Der User kann so das Land ansehen, jedoch nur den Emission-Wert ändern -->
+                        <h:inputText value="#{em.country}" styleClass="emission-input-country" disabled="true"/>
+                    </td>
+                    <td>
+                        <!-- Wird mit einem Custom-Validator (validateNumberField im FieldValidatorBean) validiert -->
+                        <!-- Davor wird der eingegebene Wert in einem Double-Wert convertiert -->
+                        <!-- Dadurch kann mann eine Pre-validierung einfügen, für den Fall, dass der Nutzer keine Zahl eingibt -->
+                        <!-- (hier im converterMessage-Attribut) -->
+                        <h:inputText id="emission_#{status.index}"
+                                     value="#{em.emission}" converter="jakarta.faces.Double"
+                                     converterMessage="This has to be a number"
+                                     validator="#{fieldValidatorBean.validateNumberField}"
+                                     styleClass="emission-input-number">
+                            <f:attribute name="fieldtype" value="emission-number" />
+                        </h:inputText>
+                        <br />
+                        <!-- Feldbezogene Fehlermeldungen -->
+                        <h:message for="emission_#{status.index}" errorStyle="color:darkred" />
+                    </td>
+                    <td>
+                        <!-- Die Emissions-Daten des eigenen landes werden als kompletter Kontext gesammelt weiter gegeben -->
+                        <!-- Dies geschieht durch das Parameter "em" der changeEmission-Funktion -->
+                        <h:commandButton value="Update" action="#{emissionBean.changeEmission(em)}" update="growl" styleClass="table-button" >
+                        </h:commandButton>
+                    </td>
+                </tr>
+            </ui:repeat>
+            </tbody>
+        </table>
+        </section>
+        </div>
+
+        <div id="message-block">
+            <!-- Primefaces -Erfolgsmeldung, wenn die Datenänderung erfolgreich durchgeführt wird -->
+            <p:growl id="growl" sticky="false" life="5000" />
+        </div>
+    </h:form>
+
+</h:body>
+</html>

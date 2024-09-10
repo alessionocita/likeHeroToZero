@@ -1,0 +1,69 @@
+<!-- Login Form -->
+
+<!DOCTYPE html>
+<!--Namespaces -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Stylesheet-->
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/style.css"  />
+    <title>Like Zero To Hero - Login</title>
+</h:head>
+
+<h:body>
+
+    <!-- onLoad-Event. Checkt ob der User schon eingeloggt ist. Falls ja, so leitet die Bean-Methode weiter auf admin.xhtml -->
+    <f:event type="preRenderView" listener="#{userBean.checkIfAlreadyLoggedIn}" />
+
+    <header>
+        <p:link outcome="index" >
+            <p:graphicImage name="images/logo.png" alt="logo" styleClass="logo"/>
+        </p:link>
+        <div>
+            <h1>Like Hero To Zero</h1>
+            <h2>Stay informed about climate change</h2>
+        </div>
+        <nav class="navlink-form">
+            <p:link value="Home" outcome="index" styleClass="navlink"/>
+            <p:link value="Sign up" outcome="register" styleClass="navlink"/>
+        </nav>
+    </header>
+
+<main>
+    <h:form id="login-form">
+
+        <h3 class="form-title">Login</h3>
+        <h4 class="form-title">to Admin Area</h4>
+
+        <h:outputLabel value="Username" />
+        <br />
+        <!-- Wird mit einem Custom-Validator und einem Custom-Regex validiert -->
+        <h:inputText id="userName" value="#{userBean.userName}" placeholder="&#160;" required="true" validator="#{fieldValidatorBean.validateField}">
+            <f:attribute name="fieldtype" value="standard" />
+        </h:inputText>
+        <br />
+        <!-- Feldbezogene Fehlermeldungen hier -->
+        <h:message for="userName" errorStyle="color:red"/>
+        <br />
+        <br />
+        <h:outputLabel value="Password" required="true" />
+        <br />
+        <!-- Wird mit einem Custom-Validator und einem Custom-Regex validiert -->
+        <h:inputSecret id="password" value="#{userBean.password}" required="true" validator="#{fieldValidatorBean.validateField}">
+            <f:attribute name="fieldtype" value="password" />
+        </h:inputSecret>
+        <br />
+        <!-- Feldbezogene Fehlermeldungen hier -->
+        <h:message for="password" errorStyle="color: red" />
+        <br />
+        <br />
+        <!-- Triggert die login-Methode im UserBean -->
+        <h:commandButton value="Submit" action="#{userBean.login}" styleClass="button" resetValues="true"/>
+    </h:form>
+</main>
+
+</h:body>
+</html>

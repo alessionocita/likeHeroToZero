@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Like Hero To Zero - Register</title>
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/style.css"  />
+</h:head>
+
+<h:body>
+
+    <header>
+        <p:link outcome="index" >
+            <p:graphicImage name="images/logo.png" alt="logo" styleClass="logo"/>
+        </p:link>
+        <div>
+            <h1>Like Hero To Zero</h1>
+            <h2>Stay informed about climate change</h2>
+        </div>
+        <nav class="navlink-form">
+            <p:link value="Home" outcome="index" styleClass="navlink"/>
+            <p:link value="Sign in" outcome="login" styleClass="navlink"/>
+        </nav>
+    </header>
+
+    <main>
+    <h:form id="register-form">
+        <h3 class="form-title">Register</h3>
+        <h4 class="form-title">as Admin-User</h4>
+        <p:outputLabel value="First Name" />
+        <br />
+        <h:inputText id="first-name" value="#{userBean.firstName}" required="true" validator="#{fieldValidatorBean.validateField}">
+        <f:attribute name="fieldtype" value="standard" />
+        </h:inputText>
+        <br />
+        <h:message for="first-name" errorClass="error-field"/>
+        <br />
+        <p:outputLabel value="Last Name" />
+        <br />
+        <h:inputText id="last-name" value="#{userBean.lastName}" required="true" validator="#{fieldValidatorBean.validateField}">
+            <f:attribute name="fieldtype" value="standard" />
+        </h:inputText>
+        <br />
+        <h:message for="last-name" errorClass="error-field"/>
+        <br />
+        <p:outputLabel value="email" />
+        <br />
+        <h:inputText id="email" value="#{userBean.email}" required="true" validator="#{fieldValidatorBean.validateField}">
+            <f:attribute name="fieldtype" value="email" />
+        </h:inputText>
+        <br />
+        <h:message for="email" errorClass="error-field"/>
+        <br />
+        <p:outputLabel value="Choose a username" />
+        <br />
+        <h:inputText id="user-name" value="#{userBean.userName}" required="true" validator="#{fieldValidatorBean.validateField}">
+            <f:attribute name="fieldtype" value="standard" />
+        </h:inputText>
+        <br />
+        <h:message for="user-name" errorClass="error-field"/>
+        <br />
+        <p:outputLabel value="Choose a password" />
+        <br />
+        <h:inputSecret id="password" value="#{userBean.password}" required="true">
+            <f:attribute name="fieldtype" value="password" />
+        </h:inputSecret>
+        <h:message for="password" errorClass="error-field"/>
+        <br />
+        <br />
+        <h:commandButton value="Register" action="#{userBean.registerUser}" update="register-growl" styleClass="button"/>
+    </h:form>
+        <!-- Allgemeine Erfolgsmeldung, wenn der User erfolgreich registriert wird -->
+        <p:growl id="register-growl" sticky="false" life="5000" globalOnly="true"/>
+    </main>
+
+</h:body>
+</html>

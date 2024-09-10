@@ -1,0 +1,49 @@
+<!-- Admin-Seite. Gibt Zugang zu den Bereichen um Emissions-Einträge einzufügen und zu ändern -->
+<!DOCTYPE html>
+<!-- Namespaces -->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="#{request.contextPath}/resources/css/style.css"  />
+    <title>Like Hero to Zero - Admin-Bereich</title>
+</h:head>
+<h:body>
+
+    <!-- onLoad-Event. Checkt ob der User eingeloggt ist. Falls nein, so leitet die Bean-Methode weiter auf login.xhtml -->
+    <f:event type="preRenderView" listener="#{userBean.checkIfLoggedIn}" />
+
+    <header>
+        <p:link outcome="index" >
+            <p:graphicImage name="images/logo.png" alt="logo" styleClass="logo"/>
+        </p:link>
+        <div>
+            <h1>Like Hero To Zero</h1>
+            <h2>Stay informed about climate change</h2>
+        </div>
+        <h:form id="nav-fom" styleClass="navlink-form">
+            <p:link value="Home" outcome="index" styleClass="navlink" />
+            <!-- Primefaces Command Link. Triggert die logout-Funktion des Beans -->
+            <p:commandLink id="logout-link" value="Logout" action="#{userBean.logout}" styleClass="navlink" />
+        </h:form>
+    </header>
+    <main>
+        <section class="admin-page" >
+    <h3>
+        <!-- Username wird dynamisch dargestellt -->
+        <h:outputText value="Welcome, #{userCookieBean.userName}!" />
+    </h3>
+            <br />
+
+            <!-- Link zu add-emission.xhtml -->
+    <p><p:link value="Add an entry" outcome="add-emission" /> to the emission table.</p>
+            <!-- Link zu cnange-emission.xhtml -->
+    <p><p:link value="Edit an entry" outcome="change-emissions" />  in the emission table.</p>
+        </section>
+    </main>
+
+</h:body>
+</html>
